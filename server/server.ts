@@ -171,11 +171,10 @@ export default class WebSocketServer {
         }
 
         const payload = <BaseGuildPayload>json
-        json = undefined
         // From now, all the possible events require the guildPlayer indentificator.
         const guildPlayer: PlayerState = await this.state.PlayerGet(`${state.trackingId}${payload.guildId}`)
 
-        if (json.op === ExternalOpCode.VOICE_UPDATE) {
+        if (payload.op === ExternalOpCode.VOICE_UPDATE) {
           const voiceUpdatePayload: VoiceUpdatePayload = <VoiceUpdatePayload>payload
           if (guildPlayer) {
             this.nats
@@ -210,14 +209,14 @@ export default class WebSocketServer {
         if (!guildPlayer) return
 
         // completely destroys the player ( in redis too )
-        if (json.op === ExternalOpCode.DESTROY) {
+        if (payload.op === ExternalOpCode.DESTROY) {
           this.nats
             .publish(guildPlayer.lavapodlerIdentifier, JSON.stringify({
               o: InternalOpCodes.DESTROY,
               guild: guildPlayer.guild
             } as InternalPayload))
           this.state.PlayerDelete(`${state.trackingId}${payload.guildId}`)
-        } else if (json.op === ExternalOpCode.PLAY) {
+        } else if (payload.op === ExternalOpCode.PLAY) {
           const playPayload: PlayPayload = <PlayPayload>json
           json = undefined
           this.nats
@@ -229,7 +228,7 @@ export default class WebSocketServer {
               endTime: playPayload.endTime,
               startTime: playPayload.startTime
             } as InternalPayload))
-        } else if (json.op === ExternalOpCode.SEEK) {
+        } else if (payload.op === ExternalOpCode.SEEK) {
           const seekPayload: SeekPayload = <SeekPayload>json
           json = undefined
           this.nats
@@ -238,7 +237,7 @@ export default class WebSocketServer {
               guild: guildPlayer.guild,
               position: seekPayload.position
             } as InternalPayload))
-        } else if (json.op === ExternalOpCode.STOP) {
+        } else if (payload.op === ExternalOpCode.STOP) {
           const stopPayload: StopPayload = <StopPayload>json
           json = undefined
           this.nats
@@ -246,7 +245,7 @@ export default class WebSocketServer {
               o: InternalOpCodes.STOP,
               guild: guildPlayer.guild
             } as InternalPayload))
-        } else if (json.op === ExternalOpCode.VOLUME) {
+        } else if (payload.op === ExternalOpCode.VOLUME) {
           const volumePayload: VolumePayload = <VolumePayload>json
           json = undefined
           this.nats
@@ -255,7 +254,7 @@ export default class WebSocketServer {
               guild: guildPlayer.guild,
               volume: volumePayload.volume
             } as InternalPayload))
-        } else if (json.op === ExternalOpCode.PAUSE) {
+        } else if (payload.op === ExternalOpCode.PAUSE) {
           const pausePayload: PausePayload = <PausePayload>json
           json = undefined
           this.nats

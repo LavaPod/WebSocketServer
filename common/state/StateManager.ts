@@ -23,7 +23,7 @@ export class StateManager {
     }
 
     public async ConnectionSetConnectionTimeout (player: string, time: number, key: string) {
-      if (this.ConnectionHas(player)) {
+      if (await this.ConnectionHas(player)) {
         this.redis.expire(`${player}-connectionState`, time / 1000)
         this.redis.set(`${key}-resume`, player, 'EX', time / 1000)
       }
