@@ -3,7 +3,7 @@
  * This file describe the payload for the seek ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class SeekPayload extends BaseGuildPayload {
     public position: number

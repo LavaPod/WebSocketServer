@@ -3,7 +3,7 @@
  * This file describe the payload for the play ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class PlayPayload extends BaseGuildPayload {
     public track: string

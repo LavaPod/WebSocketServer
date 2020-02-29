@@ -3,7 +3,7 @@
  * This file describe the payload for the pause ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class PausePayload extends BaseGuildPayload {
     public pause: boolean

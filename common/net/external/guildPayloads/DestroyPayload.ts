@@ -3,7 +3,7 @@
  * This file describe the payload for the destroy ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class DestroyPayload extends BaseGuildPayload {
 

@@ -3,7 +3,7 @@
  * This file describe the payload for the volume ws command
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class VolumePayload extends BaseGuildPayload {
     public volume: number

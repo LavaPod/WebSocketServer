@@ -3,7 +3,7 @@
  * This file describe the payload for the voiceUpdate ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
 export class VoiceUpdatePayload extends BaseGuildPayload {
     public sessionId: string

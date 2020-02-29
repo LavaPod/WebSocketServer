@@ -3,8 +3,8 @@
  * This file describe the payload for the stop ws command.
  */
 
-import { BaseGuildPayload } from "./BaseGuildPayload";
+import { BaseGuildPayload } from './BaseGuildPayload'
 
-export class StopPayload extends BaseGuildPayload{
+export class StopPayload extends BaseGuildPayload {
 
 }
