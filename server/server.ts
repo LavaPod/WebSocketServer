@@ -4,7 +4,7 @@ import { createServer } from 'http'
 import { connect } from 'nats'
 
 import { ExternalOpCode, ExternalPayload, ConfigureResumingPayload } from '../common/net/external'
-import { BaseGuildPayload, VoiceUpdatePayload, PlayPayload, SeekPayload, StopPayload, VolumePayload, PausePayload } from '../common/net/external/guildPayloads'
+import { BaseGuildPayload, VoiceUpdatePayload, PlayPayload, SeekPayload, VolumePayload, PausePayload } from '../common/net/external/guildPayloads'
 import { PlayerState } from '../common/state/PlayerState'
 import { InternalPayload, InternalOpCodes } from '../common/net/internal'
 import { ConnectionState } from '../common/state/ConnectionState'
