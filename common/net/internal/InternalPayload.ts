@@ -4,7 +4,7 @@
  */
 
 export class InternalPayload {
-    public o: InternalOpCodes
+    public o: import('./InternalOpCodes').InternalOpCodes
     public d?: any
     public t?: string
 }

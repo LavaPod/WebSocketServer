@@ -1,24 +1,25 @@
 import RedisClient from 'ioredis'
 import MessagePack from 'msgpack-lite'
 
+
 export class StateManager {
-    private redis: Redis
+    private redis: import('ioredis').Redis
     public constructor () {
       this.redis = new RedisClient(parseInt(process.env.REDIS_PORT || '32769'), process.env.REDIS_HOST || 'localhost', { db: 5 })
     }
 
-    public async ConnectionSetAndGet (player: string, newState: ConnectionState): Promise<ConnectionState> {
+    public async ConnectionSetAndGet (player: string, newState: import('./ConnectionState').ConnectionState): Promise<import('./ConnectionState').ConnectionState> {
       await this.redis.set(`${player}-connectionState`, MessagePack.encode(newState))
       return newState
     }
 
-    public async ConnectionSet (player: string, newState: ConnectionState): Promise<void> {
+    public async ConnectionSet (player: string, newState: import('./ConnectionState').ConnectionState): Promise<void> {
       await this.redis.set(`${player}-connectionState`, MessagePack.encode(newState))
     }
 
-    public async ConnectionGet (player: string): Promise<ConnectionState> {
+    public async ConnectionGet (player: string): Promise<import('./ConnectionState').ConnectionState> {
       const state = await this.redis.getBuffer(`${player}-connectionState`)
-      if (state !== null) { return <ConnectionState>MessagePack.decode(state) }
+      if (state !== null) { return <import('./ConnectionState').ConnectionState>MessagePack.decode(state) }
       return null
     }
 
@@ -43,12 +44,12 @@ export class StateManager {
       return (await this.redis.keys(`${player}-connectionState`)).length > 0
     }
 
-    public async PlayerGet (target: string): Promise<PlayerState> {
+    public async PlayerGet (target: string): Promise<import('./PlayerState').PlayerState> {
       const state = await this.redis.getBuffer(`${target}-player`)
-      return <PlayerState>MessagePack.decode(state)
+      return <import('./PlayerState').PlayerState>MessagePack.decode(state)
     }
 
-    public async PlayerSet (target: string, newState: PlayerState): Promise<void> {
+    public async PlayerSet (target: string, newState: import('./PlayerState').PlayerState): Promise<void> {
       await this.redis.set(`${target}-player`, MessagePack.encode(newState))
     }
 

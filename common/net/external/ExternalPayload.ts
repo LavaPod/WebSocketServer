@@ -1,4 +1,4 @@
 
 export class ExternalPayload {
-    public op: ExternalOpCode
+    public op: import('./ExternalOpCodes').ExternalOpCode
 }
