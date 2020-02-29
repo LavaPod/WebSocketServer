@@ -13,9 +13,9 @@ import { StateManager } from '../common/state'
 
 export default class WebSocketServer {
     private websocket: WsServer
-    private http: HttpServer
+    private http: import('http').Server
     private logger: Logger
-    private nats: Client
+    private nats: import('nats').Client
     private inbox: string
     private flake: Flake
     private state: StateManager
@@ -37,7 +37,7 @@ export default class WebSocketServer {
         noServer: true
       })
 
-      this.http = createServer((req: IncomingMessage, res: ServerResponse) => {
+      this.http = createServer((req, res) => {
         // Add some default headers to the response :D
         res.setHeader('X-Provider', 'UniX Technology Corporation / Matthieu © 2019')
         res.setHeader('X-Version', process.env.VERSION || 'unofficial version!')
@@ -67,7 +67,7 @@ export default class WebSocketServer {
       })
 
       // Websocket connection validation.
-      this.http.on('upgrade', async (request: IncomingMessage, socket: Socket, headers: Buffer, response: Response) => {
+      this.http.on('upgrade', async (request, socket, headers) => {
         // This is required for a lavalink websocker connection.
         if (request.headers['user-id'] && request.headers['num-shards']) {
           // If a resume is requested.
@@ -121,14 +121,14 @@ export default class WebSocketServer {
       }
 
       this.websocket.clients.forEach(async client => {
-        if (client.trackingId === player.connection) {
+        if (client['trackingId'] === player.connection) {
           client.send(JSON.stringify(send))
           await this.state.PlayerSet(payload.t, player)
         }
       })
     }
 
-    private async handleConnection (socket: WebSocket, request: IncomingMessage, state: ConnectionState) {
+    private async handleConnection (socket: WebSocket, request: import('http').IncomingMessage, state: ConnectionState) {
       let trackingId
       if (!state) {
         trackingId = this.flake.gen()
