@@ -238,7 +238,6 @@ export default class WebSocketServer {
               position: seekPayload.position
             } as InternalPayload))
         } else if (payload.op === ExternalOpCode.STOP) {
-          const stopPayload: StopPayload = <StopPayload>json
           json = undefined
           this.nats
             .publish(guildPlayer.lavapodlerIdentifier, JSON.stringify({
